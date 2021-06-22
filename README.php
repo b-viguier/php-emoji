@@ -11,16 +11,15 @@ Here a cheat-sheet using Emoji, with some of my favorite _tricks_: Enjoy! 🎉
 require 'utils.php';
 
 dump(
-    '`array_chunk`',
     fn() => array_chunk([🍎, 🍐, 🍊, 🍋, 🍌], 2)
-);
-dump(
-    '`array_chunk` with preserved keys',
-    fn() => array_chunk([🍎, 🍐, 🍊, 🍋, 🍌], 2, true)
 );
 
 dump(
-    '`array_column`',
+    fn() => array_chunk([🍎, 🍐, 🍊, 🍋, 🍌], 2, true),
+    '`array_chunk` with preserved keys'
+);
+
+dump(
     fn() => array_column(
         [
             ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
@@ -34,7 +33,6 @@ dump(
 );
 
 dump(
-    '`array_column` with an index',
     fn() => array_column(
         [
             ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
@@ -45,11 +43,11 @@ dump(
         ],
         'fruit',
         'people'
-    )
+    ),
+    '`array_column` with an index'
 );
 
 dump(
-    '`array_combine`',
     fn() => array_combine(
         [😀, 😎, 🥶, 🤡, 🤠],
         [🍎, 🍐, 🍊, 🍋, 🍌]
@@ -57,18 +55,120 @@ dump(
 );
 
 dump(
-    '`array_count_values`',
     fn() => array_count_values([🍎, 🍎, 🍌, 🍌, 🍎])
 );
 
 dump(
-    '`array_unique`',
+    fn() => array_diff(
+        [🍎, 🍐, 🍊, 🍋, 🍌],
+        [❌, 🍐], [❌, 🍊], [❌, 🍋]
+    )
+);
+
+dump(
+    fn() => array_diff_key(
+        [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌],
+        [🐶 => ❌, 🐭 => ❌], [🐰 => ❌]
+    )
+);
+
+dump(
+    fn() => array_fill_keys([🍎, 🍐, 🍊, 🍋, 🍌], ✅)
+);
+
+dump(
+    fn() => array_fill(2, 3, 🍌)
+);
+
+dump(
+    fn() => array_filter([🍎, 0, 🍐, false, 🍊, null, 🍋, '', 🍌])
+);
+
+dump(
+    fn() => array_filter([🍎, 🍐, 🍎, 🍋, 🍌], fn($❓) => $❓ === 🍎),
+    '`array_filter` with callback'
+);
+
+dump(
+    fn() => array_flip([🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍎, 🦊 => 🍋, 🐯 => 🍌])
+);
+
+dump(
+    fn() => array_intersect(
+        [🍎, 🍐, 🍊, 🍋, 🍌],
+        [❌, 🍊, 🍐], [🍊, 🍌]
+    )
+);
+
+dump(
+    fn() => array_intersect_key(
+        [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌],
+        [🐶 => ❌, 🦊 => ✅], [🦊 => ✅, 🐯 => ❌]
+    )
+);
+
+dump(
+    fn() => array_keys(
+        [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌]
+    )
+);
+
+dump(
+    fn() => array_map(
+        fn($👤, $🍽) => "$👤 ❤️ $🍽",
+        [😀, 😎, 🥶, 🤡],
+        [🍎, 🍐, 🍊, 🍋, 🍌]
+    )
+);
+
+dump(
+    fn() => array_map(
+        null,
+        [😀, 😎, 🥶, 🤡, 🤠],
+        [🍎, 🍐, 🍊, 🍋],
+        [🐶, 🐭, 🐰, 🦊, 🐯]
+    ),
+    '`array_map` with `null` callback'
+);
+
+dump(
+    fn() => array_merge(
+        [🐶 => 🍎, 🐭 => 🍐, 🐰 => ❌],
+        [🐰 => 🍊, 🦊 => ❌, 🐯 => 🍌],
+        [🦊 => 🍋],
+    )
+);
+
+dump(
+    fn() => array_pad([🍎, 🍐], 5, 🍌)
+);
+
+dump(
+    fn() => array_reverse([🍎, 🍐, 🍊, 🍋, 🍌])
+);
+
+dump(
+    fn() => array_reverse([🍎, 🍐, 🍊, 🍋, 🍌], true),
+    '`array_reverse` with preserved keys'
+);
+
+dump(
+    fn() => array_slice([🍎, 🍌, 🍌, 🍌, 🍎], 1, 3)
+);
+
+dump(
+    fn() => array_slice([🍎, 🍌, 🍌, 🍌, 🍎], 1, 3, true),
+    '`array_slice` with preserved keys'
+);
+
+dump(
     fn() => array_unique([🍎, 🍎, 🍌, 🍌, 🍎])
 );
 
 dump(
-    '`array_unique` without preserving keys',
-    fn() => array_values(array_unique([🍎, 🍎, 🍌, 🍌, 🍎]))
+    fn() => array_values(
+        [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌]
+    )
 );
 
 ?>

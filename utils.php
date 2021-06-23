@@ -24,6 +24,11 @@ const ✅ = '✅';
 
 $linesOfCode = file(__DIR__.DIRECTORY_SEPARATOR.'README.php');
 
+function isStringButNotAnEmoji($var): bool
+{
+
+}
+
 function dump(callable $fn, string $title = null): void
 {
     global $linesOfCode;
@@ -52,11 +57,17 @@ function dump(callable $fn, string $title = null): void
 
 function dumpArray(array $array): string
 {
+    if ([] === $array) {
+        return '[]';
+    }
+
+    $isStringButNotAnEmoji = fn($var) => is_string($var) && strlen($var) != 3 && strlen($var) != 4;
+
     $parts = [];
     foreach ($array as $elmt) {
         if (is_array($elmt)) {
             $parts[] = dumpArray($elmt);
-        } elseif (is_string($elmt) && strlen($elmt) != 3 && strlen($elmt) != 4) {
+        } elseif ($isStringButNotAnEmoji($elmt)) {
             $parts[] = "'$elmt'";
         } elseif ($elmt === null) {
             $parts[] = 'null';
@@ -67,8 +78,11 @@ function dumpArray(array $array): string
 
     $keys = array_keys($array);
     if ($keys !== range(0, count($keys) - 1)) {
-        $parts = array_map(fn($k, $v) => "$k => $v", $keys, $parts);
+        $parts = array_map(fn($k, $v) => $isStringButNotAnEmoji($k) ? "'$k' => $v" : "$k => $v", $keys, $parts);
     }
 
-    return '['.join(', ', $parts).']';
+    // Assume array homogeneity + no more than 1 sub level
+    return is_array(reset($array)) ?
+        "[\n    ".join(", \n    ", $parts).",\n]"
+        : '['.join(', ', $parts).']';;
 }

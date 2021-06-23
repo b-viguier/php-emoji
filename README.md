@@ -12,7 +12,11 @@ Here a cheat-sheet using Emoji, with some of my favorite _tricks_: Enjoy! 🎉
 array_chunk([🍎, 🍐, 🍊, 🍋, 🍌], 2);
 ```
 ```
-[[🍎, 🍐], [🍊, 🍋], [🍌]]
+[
+    [🍎, 🍐], 
+    [🍊, 🍋], 
+    [🍌],
+]
 ```
 
 ### [`array_chunk` with preserved keys](https://www.php.net/manual/en/function.array-chunk.php)
@@ -20,7 +24,11 @@ array_chunk([🍎, 🍐, 🍊, 🍋, 🍌], 2);
 array_chunk([🍎, 🍐, 🍊, 🍋, 🍌], 2, true);
 ```
 ```
-[[🍎, 🍐], [2 => 🍊, 3 => 🍋], [4 => 🍌]]
+[
+    [🍎, 🍐], 
+    [2 => 🍊, 3 => 🍋], 
+    [4 => 🍌],
+]
 ```
 
 ### [`array_column`](https://www.php.net/manual/en/function.array-column.php)
@@ -56,6 +64,30 @@ array_column(
 ```
 ```
 [😀 => 🍎, 😎 => 🍐, 🥶 => 🍊, 🤡 => 🍋, 🤠 => 🍌]
+```
+
+### [`array_column` all columns with an index](https://www.php.net/manual/en/function.array-column.php)
+```php
+array_column(
+    [
+        ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
+        ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭],
+        ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰],
+        ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊],
+        ['people' => 🤠, 'fruit' => 🍌, 'animal' => 🐯],
+    ],
+    null,
+    'people'
+);
+```
+```
+[
+    😀 => ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶], 
+    😎 => ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭], 
+    🥶 => ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰], 
+    🤡 => ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊], 
+    🤠 => ['people' => 🤠, 'fruit' => 🍌, 'animal' => 🐯],
+]
 ```
 
 ### [`array_combine`](https://www.php.net/manual/en/function.array-combine.php)
@@ -193,7 +225,13 @@ array_map(
 );
 ```
 ```
-[[😀, 🍎, 🐶], [😎, 🍐, 🐭], [🥶, 🍊, 🐰], [🤡, 🍋, 🦊], [🤠, null, 🐯]]
+[
+    [😀, 🍎, 🐶], 
+    [😎, 🍐, 🐭], 
+    [🥶, 🍊, 🐰], 
+    [🤡, 🍋, 🦊], 
+    [🤠, null, 🐯],
+]
 ```
 
 ### [`array_merge`](https://www.php.net/manual/en/function.array-merge.php)
@@ -264,6 +302,98 @@ array_values(
 ```
 ```
 [🍎, 🍐, 🍊, 🍋, 🍌]
+```
+
+
+## Advanced usage
+
+These are what I call _array tips©_:
+* Single statement
+* No anonymous function (but short arrow functions are allowed 😉)
+* 🤯
+
+⚠️ Do not use it in production, unless **ALL** your team understand it! 😅
+
+### [`array_multisort`: sort multidimensional array](https://www.php.net/manual/en/function.array-multisort.php)
+```php
+!(
+    ($data = [
+        ['people' => 😀, 'fruit' => 🍎, 'score' => 2],
+        ['people' => 😎, 'fruit' => 🍐, 'score' => 4],
+        ['people' => 🥶, 'fruit' => 🍊, 'score' => 3],
+        ['people' => 🤡, 'fruit' => 🍋, 'score' => 1],
+        ['people' => 🤠, 'fruit' => 🍌, 'score' => 5],
+    ]) && array_multisort(
+        array_column($data, 'score'),
+        $data
+    )
+) ?: $data;
+```
+```
+[
+    ['people' => 🤡, 'fruit' => 🍋, 'score' => 1], 
+    ['people' => 😀, 'fruit' => 🍎, 'score' => 2], 
+    ['people' => 🥶, 'fruit' => 🍊, 'score' => 3], 
+    ['people' => 😎, 'fruit' => 🍐, 'score' => 4], 
+    ['people' => 🤠, 'fruit' => 🍌, 'score' => 5],
+]
+```
+
+### [`array_column`: search last element](https://www.php.net/manual/en/function.array-column.php)
+```php
+!($data = [
+    ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
+    ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭],
+    ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰],
+    ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊],
+    ['people' => 🤠, 'fruit' => 🍊, 'animal' => 🐯],
+]) ?: array_column($data, null, 'fruit')[🍊] ?? null;
+```
+```
+['people' => 🤠, 'fruit' => 🍊, 'animal' => 🐯]
+```
+
+### [`array_intersect`: filtering elements](https://www.php.net/manual/en/function.array-intersect.php)
+```php
+!($data = [
+    ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
+    ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭],
+    ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰],
+    ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊],
+    ['people' => 🤠, 'fruit' => 🍊, 'animal' => 🐯],
+]) ?: array_values(
+    array_intersect_key(
+        $data,
+        array_intersect(
+            array_column($data, 'fruit'),
+            [🍊, 🍎]
+        )
+    )
+);
+```
+```
+[
+    ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶], 
+    ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰], 
+    ['people' => 🤠, 'fruit' => 🍊, 'animal' => 🐯],
+]
+```
+
+### [`array_map`: numerical statistics](https://www.php.net/manual/en/function.array-map.php)
+```php
+!($data = [1, 2, 3, 4, 5, 6]) ?: [
+    'count' => $count = count($data),
+    'average' => $avg = array_sum($data) / $count,
+    'variance' => array_sum(
+            array_map(
+                'array_product',
+                array_map(null, $data, $data)
+            )
+        ) / $count - $avg ** 2,
+];
+```
+```
+['count' => 6, 'average' => 3.5, 'variance' => 2.9166666666667]
 ```
 
 

@@ -48,6 +48,21 @@ dump(
 );
 
 dump(
+    fn() => array_column(
+        [
+            ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
+            ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭],
+            ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰],
+            ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊],
+            ['people' => 🤠, 'fruit' => 🍌, 'animal' => 🐯],
+        ],
+        null,
+        'people'
+    ),
+    '`array_column` all columns with an index'
+);
+
+dump(
     fn() => array_combine(
         [😀, 😎, 🥶, 🤡, 🤠],
         [🍎, 🍐, 🍊, 🍋, 🍌]
@@ -169,6 +184,80 @@ dump(
     fn() => array_values(
         [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌]
     )
+);
+
+?>
+
+## Advanced usage
+
+These are what I call _array tips©_:
+* Single statement
+* No anonymous function (but short arrow functions are allowed 😉)
+* 🤯
+
+⚠️ Do not use it in production, unless **ALL** your team understand it! 😅
+
+<?php
+
+dump(
+    fn() => !(
+        ($data = [
+            ['people' => 😀, 'fruit' => 🍎, 'score' => 2],
+            ['people' => 😎, 'fruit' => 🍐, 'score' => 4],
+            ['people' => 🥶, 'fruit' => 🍊, 'score' => 3],
+            ['people' => 🤡, 'fruit' => 🍋, 'score' => 1],
+            ['people' => 🤠, 'fruit' => 🍌, 'score' => 5],
+        ]) && array_multisort(
+            array_column($data, 'score'),
+            $data
+        )
+    ) ?: $data,
+    '`array_multisort`: sort multidimensional array'
+);
+
+dump(
+    fn() => !($data = [
+        ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
+        ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭],
+        ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰],
+        ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊],
+        ['people' => 🤠, 'fruit' => 🍊, 'animal' => 🐯],
+    ]) ?: array_column($data, null, 'fruit')[🍊] ?? null,
+    '`array_column`: search last element'
+);
+
+
+dump(
+    fn() => !($data = [
+        ['people' => 😀, 'fruit' => 🍎, 'animal' => 🐶],
+        ['people' => 😎, 'fruit' => 🍐, 'animal' => 🐭],
+        ['people' => 🥶, 'fruit' => 🍊, 'animal' => 🐰],
+        ['people' => 🤡, 'fruit' => 🍋, 'animal' => 🦊],
+        ['people' => 🤠, 'fruit' => 🍊, 'animal' => 🐯],
+    ]) ?: array_values(
+        array_intersect_key(
+            $data,
+            array_intersect(
+                array_column($data, 'fruit'),
+                [🍊, 🍎]
+            )
+        )
+    ),
+    '`array_intersect`: filtering elements'
+);
+
+dump(
+    fn() => !($data = [1, 2, 3, 4, 5, 6]) ?: [
+        'count' => $count = count($data),
+        'average' => $avg = array_sum($data) / $count,
+        'variance' => array_sum(
+                array_map(
+                    'array_product',
+                    array_map(null, $data, $data)
+                )
+            ) / $count - $avg ** 2,
+    ],
+    '`array_map`: numerical statistics'
 );
 
 ?>

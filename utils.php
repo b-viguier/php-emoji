@@ -24,11 +24,6 @@ const ✅ = '✅';
 
 $linesOfCode = file(__DIR__.DIRECTORY_SEPARATOR.'README.php');
 
-function isStringButNotAnEmoji($var): bool
-{
-
-}
-
 function dump(callable $fn, string $title = null): void
 {
     global $linesOfCode;

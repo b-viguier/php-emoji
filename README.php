@@ -279,6 +279,20 @@ dump(
     '`array_map`: numerical statistics'
 );
 
+dump(
+    fn() => array_map(
+            null,
+        ...[
+            [😀, 🍎, 🐶],
+            [😎, 🍐, 🐭],
+            [🥶, 🍊, 🐰],
+            [🤡, 🍋, 🦊],
+            [🤠, 🍊, 🐯],
+        ]
+    ),
+    '`array_map`: matrix transposition'
+);
+
 ?>
 
 ## How To

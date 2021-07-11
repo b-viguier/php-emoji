@@ -422,6 +422,27 @@ These are what I call _array tips©_:
 ['count' => 6, 'average' => 3.5, 'variance' => 2.9166666666667]
 ```
 
+### [`array_map`: matrix transposition](https://www.php.net/manual/en/function.array-map.php)
+```php
+array_map(
+        null,
+    ...[
+        [😀, 🍎, 🐶],
+        [😎, 🍐, 🐭],
+        [🥶, 🍊, 🐰],
+        [🤡, 🍋, 🦊],
+        [🤠, 🍊, 🐯],
+    ]
+);
+```
+```
+[
+    [😀, 😎, 🥶, 🤡, 🤠], 
+    [🍎, 🍐, 🍊, 🍋, 🍊], 
+    [🐶, 🐭, 🐰, 🦊, 🐯],
+]
+```
+
 
 ## How To
 

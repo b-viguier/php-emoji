@@ -155,6 +155,25 @@ dump(
 );
 
 dump(
+    fn() => [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊] +
+        [🐰 => ❌, 🦊 => 🍋, 🐯 => 🍌] +
+        [🦊 => ❌],
+    'Union operator',
+    'https://www.php.net/manual/en/language.operators.array.php'
+);
+
+dump(
+    fn() => array_merge([🍎, 🍐], [🍊, 🍌], [🍋]),
+    '`array_merge` with integer keys'
+);
+
+dump(
+    fn() => [🍎, 🍐] + [🍊, 🍌] + [🍋],
+    'Union operator with integer keys',
+    'https://www.php.net/manual/en/language.operators.array.php'
+);
+
+dump(
     fn() => array_pad([🍎, 🍐], 5, 🍌)
 );
 

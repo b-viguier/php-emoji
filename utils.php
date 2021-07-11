@@ -24,7 +24,7 @@ const ✅ = '✅';
 
 $linesOfCode = file(__DIR__.DIRECTORY_SEPARATOR.'README.php');
 
-function dump(callable $fn, string $title = null): void
+function dump(callable $fn, string $title = null, string $url = null): void
 {
     global $linesOfCode;
 
@@ -44,9 +44,13 @@ function dump(callable $fn, string $title = null): void
     } else {
         $funcName = substr($title, $start = 1 + strpos($title, '`'), strpos($title, '`', $start) - $start);
     }
-    $funcUrl = str_replace('_', '-', $funcName);
 
-    echo "### [$title](https://www.php.net/manual/en/function.$funcUrl.php)\n```php\n";
+    if(null === $url) {
+        $funcUrl = str_replace('_', '-', $funcName);
+        $url = "https://www.php.net/manual/en/function.$funcUrl.php";
+    }
+
+    echo "### [$title]($url)\n```php\n";
     echo "$code;\n```\n```\n".dumpArray($fn())."\n```\n\n";
 }
 

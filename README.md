@@ -246,6 +246,32 @@ array_merge(
 [🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌]
 ```
 
+### [Union operator](https://www.php.net/manual/en/language.operators.array.php)
+```php
+[🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊] +
+    [🐰 => ❌, 🦊 => 🍋, 🐯 => 🍌] +
+    [🦊 => ❌];
+```
+```
+[🐶 => 🍎, 🐭 => 🍐, 🐰 => 🍊, 🦊 => 🍋, 🐯 => 🍌]
+```
+
+### [`array_merge` with integer keys](https://www.php.net/manual/en/function.array-merge.php)
+```php
+array_merge([🍎, 🍐], [🍊, 🍌], [🍋]);
+```
+```
+[🍎, 🍐, 🍊, 🍌, 🍋]
+```
+
+### [Union operator with integer keys](https://www.php.net/manual/en/language.operators.array.php)
+```php
+[🍎, 🍐] + [🍊, 🍌] + [🍋];
+```
+```
+[🍎, 🍐]
+```
+
 ### [`array_pad`](https://www.php.net/manual/en/function.array-pad.php)
 ```php
 array_pad([🍎, 🍐], 5, 🍌);

@@ -271,7 +271,7 @@ dump(
         'average' => $avg = array_sum($data) / $count,
         'variance' => array_sum(
                 array_map(
-                    'array_product',
+                    array_product(...),
                     array_map(null, $data, $data)
                 )
             ) / $count - $avg ** 2,

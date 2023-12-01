@@ -293,6 +293,49 @@ dump(
     '`array_map`: matrix transposition'
 );
 
+dump(
+    fn() => ($func = function ($input, $filter) use (&$func) {
+        return \is_array($input)
+            ? \array_combine(
+                \array_keys($filteredInput = \array_intersect_key($input, $filter)),
+                \array_map(
+                    $func,
+                    $filteredInput,
+                    \array_intersect_key($filter, $input),
+                ),
+            ) : $input;
+    })(
+        [
+            😀 => ✅,
+            🤠 => ❌,
+            😎 => [
+                🍎 => ✅,
+                🍐 => ❌,
+            ],
+            🤡 => [
+                🍎 => [
+                    🐶 => ✅,
+                    🐰 => ❌,
+                ],
+            ],
+        ],
+        [
+            😀 => 1,
+            🥶 => 1,
+            😎 => [
+                🍎 => 1,
+                🍋 => 1,
+            ],
+            🤡 => [
+                🍎 => [
+                    🐶 => 1,
+                    🐯 => 1,
+                ],
+            ],
+        ],
+    ),
+    '`array_intersect_key`: recursive filtering by keys'
+);
 ?>
 
 ## How To
